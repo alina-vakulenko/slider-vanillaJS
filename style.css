@@ -7,6 +7,14 @@
   font-family: "Poppins", sans-serif;
 }
 
+:root {
+  --height: 340px;
+  --gap: 14px;
+  --imgWidthL: calc((100% - 2 * var(--gap)) / 3);
+  --imgWidthM: calc((100% - var(--gap)) / 2);
+  --imgWidthS: 100%;
+}
+
 body {
   display: flex;
   align-items: center;
@@ -23,6 +31,7 @@ body {
   align-items: center;
 }
 
+/* Arrows back and forward start */
 .wrapper i {
   position: absolute;
   height: 46px;
@@ -36,6 +45,7 @@ body {
 }
 
 .wrapper i:first-child {
+  display: none; /* display: block after dragging starts */
   left: 0;
   transform: translateX(-50%);
 }
@@ -44,29 +54,42 @@ body {
   right: 0;
   transform: translateX(50%);
 }
+/* Arrows back and forward end */
 
+/* Carousel start */
 .wrapper .carousel {
   display: flex;
-  column-gap: 14px;
+  column-gap: var(--gap);
   overflow: hidden;
   cursor: pointer;
+  scroll-behavior: smooth;
+}
+
+.carousel.dragging {
+  scroll-behavior: auto; /* remove smooth scroll behavior */
+  cursor: grab;
+}
+
+.carousel.dragging img {
+  pointer-events: none;
 }
 
 .carousel img {
-  height: 340px;
-  width: calc(100% / 3);
+  height: var(--height);
+  width: var(--imgWidthL);
   object-fit: cover;
-  flex: 1 0 auto;
+  flex: 0 0 auto;
 }
+/* Carousel end */
 
 @media screen and (max-width: 900px) {
   .carousel img {
-    width: calc(100% / 2);
+    width: var(--imgWidthM);
   }
 }
 
 @media screen and (max-width: 550px) {
   .carousel img {
-    width: 100%;
+    width: var(--imgWidthS);
   }
 }
